@@ -12,13 +12,13 @@ Git版本控制
 GitHub托管中心
 
     官网地址：https://github.com/
-    账号密码：r**d*y**(r************y)
+    账号密码：r*******(r************y)
 
 Git设置签名
 
     git config --list
-    git config --global user.name "renxxx"
-    git config --global user.email "280xxxxxx@qq.com"
+    git config --global user.name "r*******"
+    git config --global user.email "280******@qq.com"
 
 Git生成密钥
 
