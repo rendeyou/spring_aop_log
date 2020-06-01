@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--全限定类名>>>Mapper接口绑定Mapper映射文件-->
+<!--全限定类名+方法名>>>接口方法绑定SQL语句-->
+<!--传参方式为Map集合时>>>接口方法传参通过@Param注解设置key，SQL语句参数通过key获取value-->
+
+<mapper namespace="com.bj.mapper.UserMapper">
+    <sql id="Base_Column">
+        id,username,password,birthday,regist_time
+    </sql>
+    <!--分页查询用户列表：总记录数-->
+    <select id="totalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT count(*)
+        FROM tb_user
+        <where>
+            <if test="id !=null and id !=''">
+                AND id=#{id}
+            </if>
+            <if test="username !=null and username !=''">
+                <bind name="username" value="'%'+username+'%'"/>
+                AND username LIKE #{username}
+            </if>
+        </where>
+    </select>
+    <!--分页查询用户列表：每页结果集-->
+    <select id="userList" resultType="com.bj.pojo.User" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM tb_user
+        <where>
+            <if test="id !=null and id !=''">
+                AND id=#{id}
+            </if>
+            <if test="username !=null and username !=''">
+                <bind name="username" value="'%'+username+'%'"/>
+                AND username LIKE #{username}
+            </if>
+        </where>
+        limit #{start},#{size};
+    </select>
+    <!--用户注册-->
+    <insert id="registMapper" parameterType="com.bj.pojo.User">
+        INSERT INTO tb_user
+        VALUES
+          (DEFAULT ,#{username},#{password},#{birthday},#{registTime})
+    </insert>
+    <!--用户登录-->
+    <select id="loginMapper" resultType="com.bj.pojo.User" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM tb_user
+        WHERE
+        username=#{username}
+        AND
+        password=#{password}
+    </select>
+    <!--批量删除选中用户-->
+    <!--delete from t_user where id in (1,2,3);-->
+    <delete id="delByIdsMapper" parameterType="java.util.Map">
+        DELETE FROM tb_user
+        WHERE id IN
+        <foreach collection="idsArr" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <!--批量导入用户-->
+    <insert id="insUserBatch" parameterType="java.util.List">
+        INSERT INTO tb_user
+        VALUES
+        <foreach collection="userList" item="user" separator=",">
+            (DEFAULT ,#{user.username},#{user.password},#{user.birthday},#{user.registTime})
+        </foreach>
+    </insert>
+</mapper>
