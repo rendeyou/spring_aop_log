@@ -19,11 +19,11 @@ public class DateUtil {
      */
     public static Date str2Date(String date) {
         // properties-lang3-3.9.jar
-        if (StringUtils.isBlank( date )) {
+        if (StringUtils.isBlank(date)) {
             return null;
         }
         try {
-            return new SimpleDateFormat( "yyyy-MM-dd" ).parse( date );
+            return new SimpleDateFormat("yyyy-MM-dd").parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }

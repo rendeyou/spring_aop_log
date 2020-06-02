@@ -19,22 +19,22 @@ public class Md5Util {
      */
     public static String md5(String password) throws Exception {
         // 获取MessageDigest对象
-        MessageDigest md = MessageDigest.getInstance( "MD5" );
+        MessageDigest md = MessageDigest.getInstance("MD5");
         // 调用digest加密方法
-        byte[] temp = md.digest( password.getBytes() );
+        byte[] temp = md.digest(password.getBytes());
 //        System.out.println( Arrays.toString(temp));
 //        System.out.println("temp.length="+temp.length);
         // 将字节数组转换成十六进制的字符串
         StringBuilder builder = new StringBuilder();
         for (byte b : temp) {
             // 解决负号问题
-            String s = Integer.toHexString( b & 0xff );
+            String s = Integer.toHexString(b & 0xff);
 //            System.out.println(s);
             // 解决补零问题
             if (s.length() == 1) {
-                builder.append( 0 );
+                builder.append(0);
             }
-            builder.append( s );
+            builder.append(s);
         }
         return builder.toString();
     }
