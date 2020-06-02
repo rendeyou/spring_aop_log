@@ -20,7 +20,7 @@ public class DispatcherController {
      */
     @RequestMapping("/commons/{page}") // mvc注解
     public String toCommons(@PathVariable String page) { //mvc注解
-        return "properties/" + page;
+        return "commons/" + page;
     }
 
     /**
